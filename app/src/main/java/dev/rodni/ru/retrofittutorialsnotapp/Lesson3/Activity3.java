@@ -1,6 +1,5 @@
 package dev.rodni.ru.retrofittutorialsnotapp.Lesson3;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import dev.rodni.ru.retrofittutorialsnotapp.BuildConfig;
-import dev.rodni.ru.retrofittutorialsnotapp.Lesson2.Activity2;
 import dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User;
 import dev.rodni.ru.retrofittutorialsnotapp.Lesson2.UserClient;
 import dev.rodni.ru.retrofittutorialsnotapp.R;
@@ -42,7 +39,7 @@ public class Activity3 extends AppCompatActivity {
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User user = new dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User(
+                User user = new User(
                         edit1.getText().toString(),
                         edit2.getText().toString(),
                         Integer.parseInt(edit3.getText().toString()),
@@ -55,7 +52,7 @@ public class Activity3 extends AppCompatActivity {
 
     }
 
-    private void sendToServer(dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User user) {
+    private void sendToServer(User user) {
 
         //create OkHttpClient
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
@@ -83,13 +80,13 @@ public class Activity3 extends AppCompatActivity {
         Retrofit retrofit = builder.build();
 
         //creating client
-        dev.rodni.ru.retrofittutorialsnotapp.Lesson2.UserClient client = retrofit.create(UserClient.class);
+        UserClient client = retrofit.create(UserClient.class);
         //executing our method
-        Call<dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User> call = client.createAccount(user);
+        Call<User> call = client.createAccount(user);
 
-        call.enqueue(new Callback<dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User>() {
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User> call, Response<dev.rodni.ru.retrofittutorialsnotapp.Lesson2.User> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 Toast.makeText(Activity3.this, response.body().getId() , Toast.LENGTH_SHORT).show();
             }
 
